@@ -12,7 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup('plugins')
-require('lualine').setup()
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "vim", "vimdoc", "bash", "make", "verilog", "markdown", "python" },
   sync_install = false,
@@ -40,3 +39,5 @@ require('plugins')
 require('lsp')
 
 require('nord').set()
+
+require('lualine_cfg')
