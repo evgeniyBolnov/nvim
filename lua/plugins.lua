@@ -10,6 +10,5 @@ return {
   "lukas-reineke/indent-blankline.nvim",
   {"nvim-telescope/telescope.nvim", dependencies = {"nvim-lua/plenary.nvim"}},
   {"sudormrfbin/cheatsheet.nvim", dependencies = {"nvim-telescope/telescope.nvim"}},
-  "jim-fx/sudoku.nvim",
   "nvim-tree/nvim-web-devicons",
 }
