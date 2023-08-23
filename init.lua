@@ -11,6 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require('coq_settings')
+
 require("lazy").setup('plugins')
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "c", "lua", "vim", "vimdoc", "bash", "make", "verilog", "markdown", "python" },
@@ -38,6 +40,7 @@ require('options')
 require('plugins')
 require('lsp')
 
-require('nord').set()
+require('coq')
 
+require('nord').set()
 require('lualine_cfg')

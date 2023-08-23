@@ -11,4 +11,5 @@ return {
   {"nvim-telescope/telescope.nvim", dependencies = {"nvim-lua/plenary.nvim"}},
   {"sudormrfbin/cheatsheet.nvim", dependencies = {"nvim-telescope/telescope.nvim"}},
   "nvim-tree/nvim-web-devicons",
+  {"ms-jpq/coq_nvim", branch = "coq", dependencies = {"ms-jpq/coq.artifacts"}},
 }
