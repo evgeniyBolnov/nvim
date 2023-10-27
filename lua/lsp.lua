@@ -29,7 +29,9 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<space>f', function()
+    vim.lsp.buf.format { async = true }
+  end, bufopts)
 end
 
 local lsp_flags = {
@@ -37,8 +39,44 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-require'lspconfig'.verible.setup {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    root_dir = function() return vim.loop.cwd() end
-}
+--require'lspconfig'.verible.setup{
+--  on_attach = on_attach,
+--  flags = lsp_flags,
+--  capabilities = require'coq'.lsp_ensure_capabilities(), 
+--  root_dir = function() return vim.loop.cwd() end
+--}
+
+local util = require'lspconfig/util'
+local nvim_lsp = require'lspconfig'
+local root_pattern = util.root_pattern(".git")
+local configs = require'lspconfig/configs'
+    configs.svls = {
+      default_config = {
+        cmd = {"svls", "-d"};
+        filetypes = {"systemverilog", "verilog"};
+        root_dir = function(fname)
+            local filename = util.path.is_absolute(fname) and fname
+                or util.path.join(vim.loop.cwd(), fname)
+            return root_pattern(filename) or util.path.dirname(filename)
+        end;
+        settings = {};
+      };
+    }
+nvim_lsp.svls.setup{} 
+
+--require'lspconfig'.svls.setup{}
+
+--require'lspconfig'.svls.setup{
+--  on_attach = on_attach,
+--  flags = flags,
+--  capabilities = require'coq'.lsp_ensure_capabilities(), 
+--  root_dir = function() return vim.loop.cwd() end
+--}
+
+-- Good LSP
+--require'lspconfig'.veridian.setup{
+--  on_attach = on_attach,
+--  flags = flags,
+--  capabilities = require'coq'.lsp_ensure_capabilities(), 
+--  root_dir = function() return vim.loop.cwd() end
+--}

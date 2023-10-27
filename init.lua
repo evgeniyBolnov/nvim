@@ -15,11 +15,10 @@ require('coq_settings')
 
 require("lazy").setup('plugins')
 
+require('coq')
+require('lsp')
 require('options')
 require('plugins')
-require('lsp')
-
-require('coq')
 
 require('nord').set()
 require('lualine_cfg')
