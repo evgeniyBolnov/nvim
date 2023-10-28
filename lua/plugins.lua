@@ -1,7 +1,5 @@
 return {
   "junegunn/vim-easy-align",
---  "preservim/nerdtree",
-  "tpope/vim-fireplace",
   "shaunsingh/nord.nvim",
   "nvim-lualine/lualine.nvim",
   "tree-sitter/tree-sitter",
