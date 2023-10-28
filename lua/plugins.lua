@@ -10,6 +10,8 @@ return {
     build = ":TSUpdate"
   },
   "neovim/nvim-lspconfig",
+--  "prabirshrestha/vim-lsp",
+--  "mattn/vim-lsp-settings",
   "lukas-reineke/indent-blankline.nvim",
   { 
     "nvim-telescope/telescope.nvim", 

@@ -7,9 +7,9 @@ local builtin = require('telescope.builtin')
 -- local utf8 = require("utf8")
 
 --- opt.encoding = utf8
-opt.colorcolumn = '100'           -- Vertical line
+opt.colorcolumn = {'80', '100'}   -- Vertical line
 opt.cursorline = true             -- Highlight line with cursor
-opt.spelllang= { 'en_us', 'ru' }  -- Spell dicts
+opt.spelllang = { 'en_us', 'ru' }  -- Spell dicts
 opt.termguicolors = true          
 opt.number = true                 -- Show line numbers
 opt.relativenumber = true         -- Use relative numbers
