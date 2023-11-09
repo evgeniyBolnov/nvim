@@ -49,9 +49,9 @@ require'lspconfig'.verible.setup{
 require'lspconfig'.svls.setup{}
 
 -- Good LSP
---require'lspconfig'.veridian.setup{
---  on_attach = on_attach,
---  flags = flags,
---  capabilities = require'coq'.lsp_ensure_capabilities(), 
---  root_dir = function() return vim.loop.cwd() end
---}
+require'lspconfig'.veridian.setup{
+  on_attach = on_attach,
+  flags = flags,
+  capabilities = require'coq'.lsp_ensure_capabilities(), 
+  root_dir = function() return vim.loop.cwd() end
+}

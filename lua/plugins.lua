@@ -2,15 +2,15 @@ return {
   "junegunn/vim-easy-align",
   "shaunsingh/nord.nvim",
   "nvim-lualine/lualine.nvim",
+  "neovim/nvim-lspconfig",
   "tree-sitter/tree-sitter",
+  "lukas-reineke/indent-blankline.nvim",
+  "nvim-tree/nvim-web-devicons",
+  "simrat39/symbols-outline.nvim",
   { 
     "nvim-treesitter/nvim-treesitter", 
     build = ":TSUpdate"
   },
-  "neovim/nvim-lspconfig",
---  "prabirshrestha/vim-lsp",
---  "mattn/vim-lsp-settings",
-  "lukas-reineke/indent-blankline.nvim",
   { 
     "nvim-telescope/telescope.nvim", 
     dependencies = {
@@ -23,7 +23,6 @@ return {
       "nvim-telescope/telescope.nvim"
     }
   },
-  "nvim-tree/nvim-web-devicons",
   { "ms-jpq/coq_nvim", 
     branch = "coq", 
     dependencies = {
@@ -35,7 +34,6 @@ return {
     'tigion/nvim-asciidoc-preview',
     ft = { 'asciidoc' },
   },
-  "simrat39/symbols-outline.nvim",
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
