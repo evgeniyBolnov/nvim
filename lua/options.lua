@@ -26,6 +26,9 @@ opt.smartindent    = true                   -- Auto insert indent
 opt.compatible     = false                  -- Disable compatible with vi
 cmd[[set mouse=a]]                          -- Enable mouse
 
+opt.ignorecase = true
+opt.smartcase = true
+
 opt.filetype=on                   -- Enbale filetype detection
 
 opt.foldcolumn = '4'
@@ -52,9 +55,15 @@ key.set('n', '<leader>ff', builtin.find_files,                   {})
 key.set('n', '<leader>fg', builtin.live_grep,                    {})
 key.set('n', '<leader>fb', builtin.buffers,                      {})
 key.set('n', '<leader>fh', builtin.help_tags,                    {})
-key.set('n', '<C-n>',      require('nvim-tree.api').tree.toggle, {})
+key.set('n', '<C-n>',      '<Cmd>Neotree toggle<CR>',            {})
 key.set('n', 'ga',         '<Plug>(EasyAlign)',                  {})
 key.set('x', 'ga',         '<Plug>(EasyAlign)',                  {})
+
+local default_opts = {noremap = true, silent = true}
+key.set('n', '<Tab>', ':tabnext<CR>', {})
+key.set('n', '<S-Tab>', ':tabprevious<CR>', {})
+key.set('n', '<F5>', ':exec &nu==&rnu? "se nu!" : "se rnu!"<CR>', {})
+key.set('n', ',<space>', ':nohlsearch<CR>', {})
 
 opt.list = true
 opt.listchars:append "space:⋅"
@@ -145,7 +154,7 @@ require('symbols-outline').setup{
 }
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "bash", "make", "verilog", "markdown", "python" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "bash", "make", "verilog", "markdown", "python", "tcl"},
   sync_install     = false,
   auto_install     = true,
   ignore_install   = { "javascript" },
@@ -154,7 +163,7 @@ require'nvim-treesitter.configs'.setup {
   },
   highlight = {
     enable  = true,
-    disable = { "c", "rust" },
+--    disable = { "c", "rust" },
     disable = function(lang, buf)
         local max_filesize = 100 * 1024 -- 100 KB
         local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -166,4 +175,20 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+require'marks'.setup {
+  default_mappings   = true,
+  builtin_marks      = {},
+  cyclic             = true,
+  force_write_shada  = false,
+  refresh_interval   = 250,
+  sign_priority      = { lower=10, upper=15, builtin=8, bookmark=20 },
+  excluded_filetypes = {},
+  mappings = {
+    set_next = "m,",
+    next     = "m]",
+    preview  = "m:",
+    prev     = "m["
+  }
+}
 
+require'Comment'.setup()
