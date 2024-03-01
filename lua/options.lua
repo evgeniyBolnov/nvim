@@ -12,7 +12,7 @@ opt.cursorline     = true                   -- Highlight line with cursor
 opt.spelllang      = { 'en_us', 'ru' }      -- Spell dicts
 opt.termguicolors  = true
 opt.number         = true                   -- Show line numbers
-opt.relativenumber = true                   -- Use relative numbers
+opt.relativenumber = false                  -- Use relative numbers
 opt.wrap           = false                  -- Disable wrap lines
 opt.swapfile       = true                   -- Disable swap file
 opt.syntax         = on                     -- Enable syntax highlight
@@ -191,4 +191,7 @@ require'marks'.setup {
   }
 }
 
+local ft = require'Comment.ft'
+
+ft({'verilog', 'systemverilog'}, {'//%s', '/*%s*/'})
 require'Comment'.setup()
