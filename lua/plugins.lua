@@ -3,6 +3,25 @@ return {
   "shaunsingh/nord.nvim",
   "nvim-lualine/lualine.nvim",
   "neovim/nvim-lspconfig",
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+    },
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {}
+  },
   "tree-sitter/tree-sitter",
   "lukas-reineke/indent-blankline.nvim",
   "nvim-tree/nvim-web-devicons",
@@ -24,27 +43,16 @@ return {
       "nvim-telescope/telescope.nvim"
     }
   },
-  { "ms-jpq/coq_nvim", 
-    branch = "coq", 
-    dependencies = {
-      { "ms-jpq/coq.artifacts", branch = "artifacts" },
-      { "ms-jpq/coq.thirdparty", branch = "3p" },
-    },
-  },
+  -- { "ms-jpq/coq_nvim", 
+  --   branch = "coq", 
+  --   dependencies = {
+  --     { "ms-jpq/coq.artifacts", branch = "artifacts" },
+  --     { "ms-jpq/coq.thirdparty", branch = "3p" },
+  --   },
+  -- },
   {
     'tigion/nvim-asciidoc-preview',
     ft = { 'asciidoc' },
-  },
-  {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
-    lazy = false,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("nvim-tree").setup {}
-    end,
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -56,6 +64,6 @@ return {
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     }
   },
-  "powerman/vim-plugin-ruscmd",
+  -- "powerman/vim-plugin-ruscmd",
   'numToStr/Comment.nvim',
 }

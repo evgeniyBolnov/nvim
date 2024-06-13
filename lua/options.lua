@@ -2,6 +2,7 @@ local cmd     = vim.cmd
 local exec    = vim.api.nvim_exec
 local g       = vim.g
 local opt     = vim.opt
+local o       = vim.o
 local key     = vim.keymap
 local builtin = require('telescope.builtin')
 -- local utf8 = require("utf8")
@@ -12,9 +13,10 @@ opt.cursorline     = true                   -- Highlight line with cursor
 opt.spelllang      = { 'en_us', 'ru' }      -- Spell dicts
 opt.termguicolors  = true
 opt.number         = true                   -- Show line numbers
+opt.so             = 10
 opt.relativenumber = false                  -- Use relative numbers
 opt.wrap           = false                  -- Disable wrap lines
-opt.swapfile       = true                   -- Disable swap file
+opt.swapfile       = false                  -- Disable swap file
 opt.syntax         = on                     -- Enable syntax highlight
 opt.smarttab       = true                   -- Enable indent
 opt.tabstop        = 2                      -- Tab size - 2 spaces
@@ -24,6 +26,7 @@ opt.expandtab      = true                   -- Replace tab to spaces
 opt.autoindent     = true                   -- Copy indent for new line
 opt.smartindent    = true                   -- Auto insert indent
 opt.compatible     = false                  -- Disable compatible with vi
+o.clipboard        = 'unnamedplus'
 cmd[[set mouse=a]]                          -- Enable mouse
 
 opt.ignorecase = true
@@ -37,13 +40,14 @@ opt.foldexpr   = "nvim_treesitter#foldexpr()"
 opt.foldenable = false
 opt.foldlevel  = 4
 
-g.netrw_keepdir = false
-g.netrw_winsize = 30
+-- g.netrw_keepdir = false
+-- g.netrw_winsize = 30
 
 -- Example config in lua
 g.nord_contrast                = true
 g.nord_borders                 = true
 g.nord_disable_background      = false
+g.nord_cursorline_transparent  = true
 g.nord_italic                  = true
 g.nord_uniform_diff_background = true
 g.nord_bold                    = false
@@ -51,44 +55,50 @@ g.nord_bold                    = false
 -- g.coq_settings = { auto_start = 'shut-up' }
 g.loaded_perl_provider = 0
 
-key.set('n', '<leader>ff', builtin.find_files,                   {})
-key.set('n', '<leader>fg', builtin.live_grep,                    {})
-key.set('n', '<leader>fb', builtin.buffers,                      {})
-key.set('n', '<leader>fh', builtin.help_tags,                    {})
-key.set('n', '<C-n>',      '<Cmd>Neotree toggle<CR>',            {})
-key.set('n', 'ga',         '<Plug>(EasyAlign)',                  {})
-key.set('x', 'ga',         '<Plug>(EasyAlign)',                  {})
+key.set('n', '<leader>ff', builtin.find_files,       {})
+key.set('n', '<leader>fg', builtin.live_grep,        {})
+key.set('n', '<leader>fb', builtin.buffers,          {})
+key.set('n', '<leader>fh', builtin.help_tags,        {})
+key.set('n', '<C-n>',      '<Cmd>Neotree toggle<CR>',{})
+key.set('n', 'ga',         '<Plug>(EasyAlign)',      {})
+key.set('x', 'ga',         '<Plug>(EasyAlign)',      {})
 
 local default_opts = {noremap = true, silent = true}
-key.set('n', '<Tab>', ':tabnext<CR>', {})
-key.set('n', '<S-Tab>', ':tabprevious<CR>', {})
-key.set('n', '<F5>', ':exec &nu==&rnu? "se nu!" : "se rnu!"<CR>', {})
-key.set('n', ',<space>', ':nohlsearch<CR>', {})
+key.set('n', '<Tab>'     , '<Cmd>tabnext<CR>'                         , {})
+key.set('n', '<S-Tab>'   , '<Cmd>tabprevious<CR>'                     , {})
+key.set('n', '<F5>'      , ':exec &nu==&rnu? "se nu!" : "se rnu!"<CR>', {})
+key.set('n', '<esc><esc>', '<Cmd>noh<CR>'                             , {noremap = true, silent = false})
+key.set('v', 'J'         , ":m '>+1<CR>gv=gv"                         , {})
+key.set('v', 'K'         , ":m '<-2<CR>gv=gv"                         , {})
 
 opt.list = true
-opt.listchars:append "space:⋅"
+opt.listchars:append "trail:⋅"
+opt.listchars:append "lead:⋅"
+opt.listchars:append "tab:→ "
+--opt.listchars:append "space:⋅"
 opt.listchars:append "eol:↴"
+opt.listchars:append "extends:#"
 
-g.loaded_netrw       = 1
-g.loaded_netrwPlugin = 1
+-- g.loaded_netrw       = 1
+-- g.loaded_netrwPlugin = 1
 
 require('telescope.previewers').cat.new     = bat
 require('telescope.previewers').vimgrep.new = bat
 require('telescope.previewers').qflist.new  = bat
 
-require('nvim-tree').setup({
-  sort_by = "case_sensitive",
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
+-- require('nvim-tree').setup({
+--   sort_by = "case_sensitive",
+--   view = {
+--     width = 30,
+--   },
+--   renderer = {
+--     group_empty = true,
+--   },
+--   filters = {
+--     dotfiles = true,
+--   },
+-- })
+--
 require('symbols-outline').setup{
   highlight_hovered_item = true,
   show_guides            = true,
@@ -191,7 +201,47 @@ require'marks'.setup {
   }
 }
 
-local ft = require'Comment.ft'
+-- local ft = require'Comment.ft'
 
-ft({'verilog', 'systemverilog'}, {'//%s', '/*%s*/'})
-require'Comment'.setup()
+require('Comment.ft')({'verilog', 'systemverilog'}, {'//%s', '/*%s*/'})
+require('Comment').setup()
+
+local cmp = require'cmp'
+
+cmp.setup({
+  snippet = {
+		expand = function(args)
+			require'luasnip'.lsp_expand(args.body) -- Luasnip expand
+		end,
+	},
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+ 		{ name = 'luasnip' },
+		{ name = 'buffer' },
+		{ name = 'path' },
+  }),
+  window = {
+    documentation = cmp.config.window.bordered()
+  },
+  formatting = {
+    fields = {'menu', 'abbr', 'kind'},
+    format = function(entry, item)
+      local menu_icon = {
+        nvim_lsp = 'λ',
+        luasnip = '⋗',
+        buffer = 'Ω',
+        path = '🖫',
+      }
+
+      item.menu = menu_icon[entry.source.name]
+      return item
+    end,
+  },
+})

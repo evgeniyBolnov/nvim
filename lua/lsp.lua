@@ -39,19 +39,31 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-require'lspconfig'.verible.setup{
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = require'coq'.lsp_ensure_capabilities(), 
-  root_dir = function() return vim.loop.cwd() end
-}
+local lspconfig = require('lspconfig')
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require'lspconfig'.svls.setup{}
+-- lspconfig.verible.setup({
+--   -- on_attach = on_attach,
+--   flags = lsp_flags,
+--   -- capabilities = require'coq'.lsp_ensure_capabilities(), 
+--   capabilities = lsp_capabilities,
+--   root_dir = function() return vim.loop.cwd() end
+-- })
+
+-- lspconfig.svls.setup({
+--   capabilities = lsp_capabilities,
+--   root_dir = function() return vim.loop.cwd() end
+-- })
 
 -- Good LSP
-require'lspconfig'.veridian.setup{
+lspconfig.veridian.setup({
   on_attach = on_attach,
   flags = flags,
-  capabilities = require'coq'.lsp_ensure_capabilities(), 
+  -- capabilities = require'coq'.lsp_ensure_capabilities(), 
+  capabilities = lsp_capabilities,
   root_dir = function() return vim.loop.cwd() end
-}
+})
+
+-- lspconfig.verilator.setup({
+--   capabilities = lsp_capabilities,
+-- })
