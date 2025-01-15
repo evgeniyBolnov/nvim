@@ -5,9 +5,8 @@ local opt     = vim.opt
 local o       = vim.o
 local key     = vim.keymap
 local builtin = require('telescope.builtin')
--- local utf8 = require("utf8")
 
--- - opt.encoding   = utf8
+opt.encoding       = utf8
 opt.colorcolumn    = { '80', '100', '120' } -- Vertical line
 opt.cursorline     = true                   -- Highlight line with cursor
 opt.spelllang      = { 'en_us', 'ru' }      -- Spell dicts
@@ -30,20 +29,10 @@ o.clipboard        = 'unnamedplus'
 cmd[[set mouse=a]]                          -- Enable mouse
 
 opt.ignorecase = true
-opt.smartcase = true
+opt.smartcase  = true
 
-opt.filetype=on                   -- Enbale filetype detection
+opt.filetype = on                   -- Enbale filetype detection
 
-opt.foldcolumn = '4'
-opt.foldmethod = "expr"
-opt.foldexpr   = "nvim_treesitter#foldexpr()"
-opt.foldenable = false
-opt.foldlevel  = 4
-
--- g.netrw_keepdir = false
--- g.netrw_winsize = 30
-
--- Example config in lua
 g.nord_contrast                = true
 g.nord_borders                 = true
 g.nord_disable_background      = false
@@ -52,13 +41,12 @@ g.nord_italic                  = true
 g.nord_uniform_diff_background = true
 g.nord_bold                    = false
 
--- g.coq_settings = { auto_start = 'shut-up' }
 g.loaded_perl_provider = 0
 
-key.set('n', '<leader>ff', builtin.find_files,       {})
-key.set('n', '<leader>fg', builtin.live_grep,        {})
-key.set('n', '<leader>fb', builtin.buffers,          {})
-key.set('n', '<leader>fh', builtin.help_tags,        {})
+key.set('n', '<leader>ff', builtin.find_files,       {desc = 'Telescope find files'})
+key.set('n', '<leader>fg', builtin.live_grep,        {desc = 'Telescope live grep'})
+key.set('n', '<leader>fb', builtin.buffers,          {desc = 'Telescope buffers'})
+key.set('n', '<leader>fh', builtin.help_tags,        {desc = 'Telescope help tags'})
 key.set('n', '<C-n>',      '<Cmd>Neotree toggle<CR>',{})
 key.set('n', 'ga',         '<Plug>(EasyAlign)',      {})
 key.set('x', 'ga',         '<Plug>(EasyAlign)',      {})
@@ -75,30 +63,13 @@ opt.list = true
 opt.listchars:append "trail:⋅"
 opt.listchars:append "lead:⋅"
 opt.listchars:append "tab:→ "
---opt.listchars:append "space:⋅"
 opt.listchars:append "eol:↴"
 opt.listchars:append "extends:#"
-
--- g.loaded_netrw       = 1
--- g.loaded_netrwPlugin = 1
 
 require('telescope.previewers').cat.new     = bat
 require('telescope.previewers').vimgrep.new = bat
 require('telescope.previewers').qflist.new  = bat
 
--- require('nvim-tree').setup({
---   sort_by = "case_sensitive",
---   view = {
---     width = 30,
---   },
---   renderer = {
---     group_empty = true,
---   },
---   filters = {
---     dotfiles = true,
---   },
--- })
---
 require('symbols-outline').setup{
   highlight_hovered_item = true,
   show_guides            = true,
@@ -163,7 +134,7 @@ require('symbols-outline').setup{
   },
 }
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   ensure_installed = { "c", "lua", "vim", "vimdoc", "bash", "make", "verilog", "markdown", "python", "tcl"},
   sync_install     = false,
   auto_install     = true,
@@ -185,7 +156,13 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require'marks'.setup {
+opt.foldcolumn = '4'
+opt.foldenable = true
+opt.foldmethod = 'expr'
+opt.foldexpr   = 'nvim_treesitter#foldexpr()'
+opt.foldlevel  = 4
+
+require('marks').setup {
   default_mappings   = true,
   builtin_marks      = {},
   cyclic             = true,
@@ -194,14 +171,42 @@ require'marks'.setup {
   sign_priority      = { lower=10, upper=15, builtin=8, bookmark=20 },
   excluded_filetypes = {},
   mappings = {
-    set_next = "m,",
-    next     = "m]",
-    preview  = "m:",
-    prev     = "m["
+    set_next    = "m,"        , --Set next available lowercase mark at cursor.
+    toggle      = "m;"        , --Toggle next available mark at cursor.
+    delete_line = "dm-"       , --Deletes all marks on current line.
+    delete_buf  = "dm<space>" , --Deletes all marks in current buffer.
+    next        = "m]"        , --Goes to next mark in buffer.
+    prev        = "m["        , --Goes to previous mark in buffer.
+    preview     = "m:"        , --Previews mark (will wait for user input). press <cr> to just preview the next mark.
+    set         = "m"         , --Sets a letter mark (will wait for input).
+    delete      = "dm"        , --Delete a letter mark (will wait for input).
+    set_bookmark0 = "m0"     , --Sets a bookmark from group[0].
+    set_bookmark1 = "m1"     , --Sets a bookmark from group[1].
+    set_bookmark2 = "m2"     , --Sets a bookmark from group[2].
+    set_bookmark3 = "m3"     , --Sets a bookmark from group[3].
+    set_bookmark4 = "m4"     , --Sets a bookmark from group[4].
+    set_bookmark5 = "m5"     , --Sets a bookmark from group[5].
+    set_bookmark6 = "m6"     , --Sets a bookmark from group[6].
+    set_bookmark7 = "m7"     , --Sets a bookmark from group[7].
+    set_bookmark8 = "m8"     , --Sets a bookmark from group[8].
+    set_bookmark9 = "m9"     , --Sets a bookmark from group[9].
+    delete_bookmark0 = "dm0" , --Deletes all bookmark from group[0].
+    delete_bookmark1 = "dm1" , --Deletes all bookmark from group[1].
+    delete_bookmark2 = "dm2" , --Deletes all bookmark from group[2].
+    delete_bookmark3 = "dm3" , --Deletes all bookmark from group[3].
+    delete_bookmark4 = "dm4" , --Deletes all bookmark from group[4].
+    delete_bookmark5 = "dm5" , --Deletes all bookmark from group[5].
+    delete_bookmark6 = "dm6" , --Deletes all bookmark from group[6].
+    delete_bookmark7 = "dm7" , --Deletes all bookmark from group[7].
+    delete_bookmark8 = "dm8" , --Deletes all bookmark from group[8].
+    delete_bookmark9 = "dm9" , --Deletes all bookmark from group[9].
+    delete_bookmark  = "dm=" , --Deletes the bookmark under the cursor.
+    next_bookmark = "m}", --Moves to the next bookmark having the same type as the
+                          --bookmark under the cursor.
+    prev_bookmark = "m{", --Moves to the previous bookmark having the same type as the
+                          --bookmark under the cursor.
   }
 }
-
--- local ft = require'Comment.ft'
 
 require('Comment.ft')({'verilog', 'systemverilog'}, {'//%s', '/*%s*/'})
 require('Comment').setup()

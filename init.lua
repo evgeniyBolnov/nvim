@@ -11,15 +11,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- require('coq_settings')
--- require('coq')
-
 require("lazy").setup('plugins')
 
 require('lsp')
-require('cmp').setup()
+-- require('cmp').setup()
 require('options')
 require('plugins')
 
 require('nord').set()
 require('lualine_cfg')
+require('autocmd')
+

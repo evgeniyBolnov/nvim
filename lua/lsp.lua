@@ -56,12 +56,21 @@ local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- })
 
 -- Good LSP
+local lspconfutil = require 'lspconfig/util'
+local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
+
 lspconfig.veridian.setup({
-  on_attach = on_attach,
-  flags = flags,
-  -- capabilities = require'coq'.lsp_ensure_capabilities(), 
-  capabilities = lsp_capabilities,
-  root_dir = function() return vim.loop.cwd() end
+  cmd = { 'veridian' },
+  root_dir = function(fname)
+      local filename = lspconfutil.path.is_absolute(fname) and fname
+      or lspconfutil.path.join(vim.loop.cwd(), fname)
+      return root_pattern(filename) or lspconfutil.path.dirname(filename)
+  end;
+  -- on_attach = on_attach,
+  -- flags = flags,
+  -- -- capabilities = require'coq'.lsp_ensure_capabilities(), 
+  -- capabilities = lsp_capabilities,
+  -- root_dir = function() return vim.loop.cwd() end
 })
 
 -- lspconfig.verilator.setup({

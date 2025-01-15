@@ -24,7 +24,6 @@ return {
   },
   "tree-sitter/tree-sitter",
   "lukas-reineke/indent-blankline.nvim",
-  "nvim-tree/nvim-web-devicons",
   "chentoast/marks.nvim",
   "simrat39/symbols-outline.nvim",
   { 
@@ -34,7 +33,8 @@ return {
   { 
     "nvim-telescope/telescope.nvim", 
     dependencies = {
-      "nvim-lua/plenary.nvim"
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
     }
   },
   { 
@@ -43,20 +43,13 @@ return {
       "nvim-telescope/telescope.nvim"
     }
   },
-  -- { "ms-jpq/coq_nvim", 
-  --   branch = "coq", 
-  --   dependencies = {
-  --     { "ms-jpq/coq.artifacts", branch = "artifacts" },
-  --     { "ms-jpq/coq.thirdparty", branch = "3p" },
-  --   },
-  -- },
   {
     'tigion/nvim-asciidoc-preview',
     ft = { 'asciidoc' },
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    -- branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -66,4 +59,12 @@ return {
   },
   -- "powerman/vim-plugin-ruscmd",
   'numToStr/Comment.nvim',
+  'vhda/verilog_systemverilog.vim',
+  {
+    "iamcco/markdown-preview.nvim",
+    event = "VeryLazy",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+  }
 }
