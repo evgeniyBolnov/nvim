@@ -47,6 +47,7 @@ key.set('n', '<leader>ff', builtin.find_files,       {desc = 'Telescope find fil
 key.set('n', '<leader>fg', builtin.live_grep,        {desc = 'Telescope live grep'})
 key.set('n', '<leader>fb', builtin.buffers,          {desc = 'Telescope buffers'})
 key.set('n', '<leader>fh', builtin.help_tags,        {desc = 'Telescope help tags'})
+key.set('n', '<leader>fm', builtin.marks,            {desc = 'Telescope marks'})
 key.set('n', '<C-n>',      '<Cmd>Neotree toggle<CR>',{})
 key.set('n', 'ga',         '<Plug>(EasyAlign)',      {})
 key.set('x', 'ga',         '<Plug>(EasyAlign)',      {})
