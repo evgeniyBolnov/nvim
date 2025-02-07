@@ -13,8 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup('plugins')
 
-require('lsp')
--- require('cmp').setup()
+-- require('lsp')
 require('options')
 require('plugins')
 

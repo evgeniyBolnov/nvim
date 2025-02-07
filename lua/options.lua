@@ -57,8 +57,10 @@ key.set('n', '<Tab>'     , '<Cmd>tabnext<CR>'                         , {})
 key.set('n', '<S-Tab>'   , '<Cmd>tabprevious<CR>'                     , {})
 key.set('n', '<F5>'      , ':exec &nu==&rnu? "se nu!" : "se rnu!"<CR>', {})
 key.set('n', '<esc><esc>', '<Cmd>noh<CR>'                             , {noremap = true, silent = false})
-key.set('v', 'J'         , ":m '>+1<CR>gv=gv"                         , {})
-key.set('v', 'K'         , ":m '<-2<CR>gv=gv"                         , {})
+key.set('n', 'J'         , ":m +1<CR>"                                , {})
+key.set('n', 'K'         , ":m -2<CR>"                                , {})
+key.set('v', 'J'         , ":m'>+<CR>gv=gv"                           , {})
+key.set('v', 'K'         , ":m-2<CR>gv=gv"                            , {})
 
 opt.list = true
 opt.listchars:append "trail:⋅"
@@ -251,3 +253,4 @@ cmp.setup({
     end,
   },
 })
+
