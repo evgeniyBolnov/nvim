@@ -61,11 +61,11 @@ local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
 
 lspconfig.veridian.setup({
   cmd = { 'veridian' },
-  root_dir = function(fname)
-      local filename = lspconfutil.path.is_absolute(fname) and fname
-      or lspconfutil.path.join(vim.loop.cwd(), fname)
-      return root_pattern(filename) or lspconfutil.path.dirname(filename)
-  end;
+  root_dir = function(fname) return vim.loop.cwd() end
+      -- local filename = lspconfutil.path.is_absolute(fname) and fname
+      -- or lspconfutil.path.join(vim.loop.cwd(), fname)
+      -- return root_pattern(filename) or lspconfutil.path.dirname(filename)
+  -- end;
   -- on_attach = on_attach,
   -- flags = flags,
   -- -- capabilities = require'coq'.lsp_ensure_capabilities(), 

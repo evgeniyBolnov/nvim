@@ -5,10 +5,12 @@ return {
   "neovim/nvim-lspconfig",
   {
     "hrsh7th/nvim-cmp",
+    version = false,
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
     },
@@ -22,7 +24,7 @@ return {
     end,
     opts = {}
   },
-  -- "tree-sitter/tree-sitter",
+  "tree-sitter/tree-sitter",
   "lukas-reineke/indent-blankline.nvim",
   "chentoast/marks.nvim",
   "simrat39/symbols-outline.nvim",
@@ -56,10 +58,17 @@ return {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    }
+    },
+    lazy = false, -- neo-tree will lazily load itself
+    ---@module "neo-tree"
+    ---@type neotree.Config?
+    opts = {
+    -- fill any relevant options here
+    },
   },
-  -- "powerman/vim-plugin-ruscmd",
+  "powerman/vim-plugin-ruscmd",
   'numToStr/Comment.nvim',
+  'majutsushi/tagbar',
   'vhda/verilog_systemverilog.vim',
   {
     "iamcco/markdown-preview.nvim",
@@ -69,3 +78,4 @@ return {
     build = function() vim.fn["mkdp#util#install"]() end,
   }
 }
+

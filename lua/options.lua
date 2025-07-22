@@ -42,6 +42,13 @@ g.nord_uniform_diff_background = true
 g.nord_bold                    = false
 
 g.loaded_perl_provider = 0
+g.verilog_syntax_fold_lst = "all"
+
+g.tagbar_show_data_type = 1
+g.tagbar_compact = 1
+g.tagbar_show_balloon = 1
+g.tagbar_show_visibility = 1
+g.tagbar_show_linenumbers = 0
 
 key.set('n', '<leader>ff', builtin.find_files,       {desc = 'Telescope find files'})
 key.set('n', '<leader>fg', builtin.live_grep,        {desc = 'Telescope live grep'})
@@ -61,6 +68,7 @@ key.set('n', 'J'         , ":m +1<CR>"                                , {})
 key.set('n', 'K'         , ":m -2<CR>"                                , {})
 key.set('v', 'J'         , ":m'>+<CR>gv=gv"                           , {})
 key.set('v', 'K'         , ":m-2<CR>gv=gv"                            , {})
+key.set('n', '<F8>'      , ':TagbarToggle<CR>'                        , default_opts)
 
 opt.list = true
 opt.listchars:append "trail:⋅"
@@ -254,3 +262,33 @@ cmp.setup({
   },
 })
 
+require('asciidoc-preview').setup({
+  server = {
+    converter = 'cmd',
+    port = 11235,
+  },
+  preview = {position = 'current'},
+})
+
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '󰌵',
+    },
+  }
+})
+
+require('neo-tree').setup({
+  sources = {
+    "filesystem",
+    "git_status",
+  },
+  enable_diagnostics = true,
+  enable_refresh_on_write = false,
+  hide_root_node = false,
+  log_level = "trace",
+  log_to_file = "/mnt/c/Users/e.bolnov/Desktop/neo.log",
+})
