@@ -38,3 +38,7 @@ if vim.fn.has('wsl') == 1 then
                 cache_enabled = 0,
         }
 end
+
+vim.cmd[[highlight CursorLine guibg=#434B5E]]
+vim.cmd[[highlight Cursor     gui=reverse guifg=reverse]]
+

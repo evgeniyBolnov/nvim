@@ -289,6 +289,4 @@ require('neo-tree').setup({
   enable_diagnostics = true,
   enable_refresh_on_write = false,
   hide_root_node = false,
-  log_level = "trace",
-  log_to_file = "/mnt/c/Users/e.bolnov/Desktop/neo.log",
 })
