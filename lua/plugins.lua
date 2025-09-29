@@ -26,7 +26,10 @@ return {
   },
   "tree-sitter/tree-sitter",
   "lukas-reineke/indent-blankline.nvim",
-  "chentoast/marks.nvim",
+  {
+    "chentoast/marks.nvim",
+    event = "VeryLazy",
+  },
   "simrat39/symbols-outline.nvim",
   { 
     "nvim-treesitter/nvim-treesitter", 
